@@ -7,7 +7,7 @@
 
 - Work In Dm And Group Dm
 - simple and fast
-- ringing every 1 second
+- ringing every 0.25 second
 
 ## something Like that
 
