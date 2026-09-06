@@ -2,10 +2,10 @@ const { Client } = require('discord.js-selfbot-youtsuho-v13');
 const chalk = require('chalk');
 const client = new Client();  
 const { token } = require('./config.json');
-  
+
 let ringingTimeout;  
 let connection;  
-  
+
 client.on('ready', async () => {  
   console.log(chalk.green('[+] | ') + chalk.white(`Spam Ring Ready: ${client.user.username}`));  
 });  
@@ -44,11 +44,11 @@ client.on('messageCreate', async (message) => {
       const msg = await message.edit(`\`\`\`diff\n+ [+] Starting Call in ${label}\n\`\`\``);
       console.log(chalk.green('[+] | Starting Call')); 
       connection = await client.voice.joinChannel(message.channel.id,{
-          selfDeaf: true,
+          selfDeaf: false,
           selfMute: true,
-          selfVideo: true,
+          selfVideo: false,
         });
-      const ring = async () => {  
+      const ring = async () => {
         await message.channel.ring();
         ringingTimeout = setTimeout(async () => {  
           try {  
@@ -58,7 +58,7 @@ client.on('messageCreate', async (message) => {
           } catch (err) {  
             console.error(err);  
           }  
-        }, 1000); // this like dealy you can make it ring every 15 sec or less (my eng bad)
+        }, 250); // this like dealy you can make it ring every 15 sec or less (my eng bad)
       };  
       ring();  
     } catch (error) {  
