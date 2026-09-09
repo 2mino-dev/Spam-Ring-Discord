@@ -1,3 +1,4 @@
 {
-    "token": "YOUR_DISCORD_TOKEN_HERE"
+    "token": "YOUR_DISCORD_TOKEN_HERE",
+    "interval": 250
 }
