@@ -27,7 +27,7 @@
 cd /path/to/folder
 
 # Install dependencies
-npm install discord.js-selfbot-youtsuho-v13 chalk
+npm install discord.js-selfbot-vg18-v13 chalk
 ```
 ##  Setup
 
