@@ -1,7 +1,13 @@
-const { Client } = require('discord.js-selfbot-youtsuho-v13'); 
+/**
+ *  well i know my code is soo bad but this is my first selfbot with javascript
+ *  also i am learning javascript
+ *  and thank you
+ */
+
+const { Client } = require('discord.js-selfbot-vg18-v13');
 const chalk = require('chalk');
 const client = new Client();  
-const { token } = require('./config.json');
+const { token, interval } = require('./config.json');
 
 let ringingTimeout;  
 let connection;  
@@ -13,7 +19,7 @@ client.on('ready', async () => {
 client.on('messageCreate', async (message) => {  
   if (client.user.id !== message.author.id) return;  
   if (!['DM', 'GROUP_DM'].includes(message.channel.type)) {  
-    return message.edit("```diff\n- [-] This command can only be used in DMs or Group DMs.\n```")
+    return message.reply("```diff\n- [-] This command can only be used in DMs or Group DMs.\n```")
   }  
   const label = message.channel.type === 'DM' ? 'DM' : 'Group DM';  
   
@@ -37,33 +43,32 @@ client.on('messageCreate', async (message) => {
     else if (connection) {
       await connection.disconnect();
       connection = null;
-      return message.edit("```diff\n- [-] Already ringing\n```")
-      connection.disconnect();
+      return message.reply("```diff\n- [-] Already ringing\n```")
     };
     try {  
-      const msg = await message.edit(`\`\`\`diff\n+ [+] Starting Call in ${label}\n\`\`\``);
+      await message.reply(`\`\`\`diff\n+ [+] Starting Call in ${label}\n\`\`\``);
       console.log(chalk.green('[+] | Starting Call')); 
       connection = await client.voice.joinChannel(message.channel.id,{
-          selfDeaf: false,
+          selfDeaf: true,
           selfMute: true,
           selfVideo: false,
         });
       const ring = async () => {
+        if (!connection) return;
         await message.channel.ring();
         ringingTimeout = setTimeout(async () => {  
           try {  
-            await msg.edit(`\`\`\`diff\n+ [+] Ringing again in ${label}\n\`\`\``);
+            console.log(chalk.green(`[+] Ringing again in ${label}`));
             ring();
-            
           } catch (err) {  
             console.error(err);  
           }  
-        }, 250); // this like dealy you can make it ring every 15 sec or less (my eng bad)
-      };  
-      ring();  
+        }, interval); // this like dealy you can make it ring every 15 sec or less in config.json (my eng bad)
+      };
+      ring();
     } catch (error) {  
       console.error(error);  
-      message.edit(`\`\`\`diff\n- [-] Failed: ${error.message}\n\`\`\``);  
+      message.reply(`\`\`\`diff\n- [-] Failed: ${error.message}\n\`\`\``);  
       console.log(chalk.red('[+] | Failed to start ringing'));
     }  
   } 
