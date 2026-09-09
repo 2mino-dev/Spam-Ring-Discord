@@ -7,7 +7,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "discord.js-selfbot-youtsuho-v13": "latest",
+    "discord.js-selfbot-vg18-v13": "latest",
     "chalk": "latest"
   },
   "author": "amino",
